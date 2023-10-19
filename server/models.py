@@ -3,18 +3,18 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class artists(Base):
+class Artists(Base):
     __tablename__ = 'artists'
     ArtistId = Column(Integer, primary_key = True)
     Name = Column(String)
 
-class albums(Base):
+class Albums(Base):
     __tablename__ = 'albums'
     AlbumId = Column(Integer, primary_key = True)
     Title = Column(String)
     ArtistId = Column(Integer, ForeignKey("Artists.ArtistId"))
 
-class customers(Base):
+class Customers(Base):
     __tablename__ = 'customers'
     CustomerId = Column(Integer, primary_key = True)
     Firstname = Column(String)
@@ -31,7 +31,7 @@ class customers(Base):
 
 # employees
 
-class genres(Base):
+class Genres(Base):
     __tablename__ = 'genres'
     GenreId = Column(Integer, primary_key = True)
     Name = Column(String)
@@ -40,22 +40,22 @@ class genres(Base):
 
 # invoice_items
 
-class media_types(Base):
+class Media_types(Base):
     __tablename__ = 'media_types'
     MediaTypeiId = Column(Integer, primary_key = True)
     Name = Column(String)
 
-class playlists(Base):
+class Playlists(Base):
     __tablename__ = 'playlists'
     PlaylistId = Column(Integer, primary_key = True)
     Name = Column(String)
 
-class playlist_track(Base):
+class Playlist_track(Base):
     __tablename__ = 'playlist_track'
     PlaylistId = Column(Integer, ForeignKey("playlists.PlaylistId"), primary_key = True)
     TrackId = Column(Integer, ForeignKey("tracks.TrackId"), primary_key = True)
 
-class tracks(Base):
+class Tracks(Base):
     __tablename__ = 'tracks'
     TrackId = Column(Integer, primary_key = True)
     Name = Column(String)
