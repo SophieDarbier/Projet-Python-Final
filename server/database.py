@@ -9,8 +9,10 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 def get_artists_by_name(db, artist_name):
     return db.query(Artists).filter(Artists.Name == artist_name).all()
+
 
 def get_albums_by_name(db, album_id):
     return db.query(Albums).filter(Albums.AlbumId == album_id).first()
