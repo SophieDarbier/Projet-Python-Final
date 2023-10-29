@@ -1,6 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
-from database import *
+from server.database import *
 
 app = FastAPI()
 
@@ -14,8 +14,8 @@ def get_db():
     finally:
         db.close()
 
-    
-# un nom d’artiste, et afficher les artistes comprenant le nom donné
+
+# an artist name, and display artists with the given name
 @app.get("/artists/{artist_name:path}")
 async def getArtists(artist_name: str, db: Session = Depends(get_db)):
     Artists = get_artists_by_name(db, artist_name)
@@ -24,7 +24,7 @@ async def getArtists(artist_name: str, db: Session = Depends(get_db)):
     return Artists
 
 
-# un identifiant d’artiste, et afficher les noms d’albums correspondants
+# an artist ID, and display the corresponding album names
 @app.get("/albums/{album_id}")
 async def getAlbums(album_id: int, db: Session = Depends(get_db)):
     Albums = get_albums_by_name(db, album_id)
@@ -33,8 +33,12 @@ async def getAlbums(album_id: int, db: Session = Depends(get_db)):
     return Albums
 
 
-# un identifiant d’album, et afficher les noms de pistes correspondants
-
-# @app.get("/artists/{artist_name}")
-# async def getArtists(artist_name :str, db: Session = Depends(get_db)):
-#    return db.query(models.Artists).filter(artist_name).all()
+# an album ID, and display the corresponding track names
+@app.get("/tracks/{album_id}")
+async def getTracks(album_id: int, db: Session = Depends(get_db)):
+    tracks = get_tracks_by_album(db, album_id)
+    if not tracks:
+        raise HTTPException(
+            status_code=404, detail="Tracks not found for the specified album"
+        )
+    return tracks
